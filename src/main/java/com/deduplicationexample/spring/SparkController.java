@@ -26,18 +26,9 @@ public class SparkController {
 
     @GetMapping("/read-csv")
     public ResponseEntity<String> getRowCount() {
-        //URL url = this.getClass().getClassLoader().getResource("/resources");
+
         URL url = getClass().getClassLoader().getResource("raw_data.csv");
-        //Dataset<Row> dataset = sparkSession.read().option("header", "true").csv("../spark-spring-boot/src/main/resources/raw_data.csv");
         Dataset<Row> dataset = this.sparkSession.read().option("header", "true").csv(url.getPath());
-
-//        Dataset<Row> df = sparkSession.read().csv(url.getPath());
-//        Dataset<Row> df = spark.read()
-//                .option("mode", "DROPMALFORMED")
-//                .schema(schema)
-//                .csv(url.getPath());
-
-
         String html = String.format("<h1>%s</h1>", "Running Apache Spark on/with support of Spring boot") +
                 String.format("<h2>%s</h2>", "Spark version = "+sparkSession.sparkContext().version()) +
                 String.format("<h3>%s</h3>", "Read csv..") +
